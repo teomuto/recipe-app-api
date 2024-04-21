@@ -7,3 +7,26 @@ run will start a specific container defined in config
 --rm removes the container
 app is the name of the service
 sh -c passes in a shell command
+
+
+##################################################################
+on Dockerfile
+python alpine versions are linux based images that are very light on cofigurations and suited to run on lower specs machines
+PYTHONBUFFERED 1 tells python to not buffer the output and print it straight to console, avoiding delays
+COPY ./requirements.txt /tmp/requirements.txt copies the first filename from the local machine to the second filename that is in the docker image
+
+RUN python -m venv /py && \ # new virtual enviroment
+    /py/bin/pip install --upgrade pip && \ # upgrades pip
+    /py/bin/pip install -r /tmp/requirements.txt && \ # install requirements into venv
+    rm -rf /tmp && \ # remove directory to avoid extra dependencies and make image as light-weight as possible
+    adduser \ # adds user into image (avoid using root user)
+        --disabled-password \ 
+        --no-create-home \
+        django-user # username
+
+slightly more effitient to run commmands in one single command broken down in lines with &&\ because if ran with multiples RUN commands it would create
+multiple image layers
+
+ENV PATH="/py/bin/$PATH" defines enviroment to where run commands from
+
+USER django-user runs image as the last declared user, avoiding root user permissions and possibly compromising the entire application
