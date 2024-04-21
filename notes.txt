@@ -30,3 +30,6 @@ multiple image layers
 ENV PATH="/py/bin/$PATH" defines enviroment to where run commands from
 
 USER django-user runs image as the last declared user, avoiding root user permissions and possibly compromising the entire application
+
+#####################################################################
+
