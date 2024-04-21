@@ -35,4 +35,25 @@ ENV PATH="/py/bin/$PATH" defines enviroment to where run commands from
 USER django-user runs image as the last declared user, avoiding root user permissions and possibly compromising the entire application
 
 #####################################################################
+version: "3.9" # version of docker compose syntax
 
+
+services:
+  app:
+    build:
+      context: . # current directory
+      args:
+       - DEV=true
+    ports:
+     - "8000:8000" # port 8000 from local machine to port 8000 to docker container
+    volumes:
+     - ./app:/app # same as ports, so the code in project is in sync with the container without having to rebuild it every single time
+    command: >
+     sh -c "python manage.py runserver 0.0.0.0:8000" 
+
+#####################################################################
+start django project command
+docker-compose run --rm app sh -c "django-admin startproject app ."
+
+check version of some package in the container:
+docker-compose run --rm app sh -c "python -m <package-name> --version"

@@ -1,15 +1,15 @@
-version: "3.9" # version of docker compose syntax
+version: "3.9"
 
 
 services:
   app:
     build:
-      context: . # current directory
+      context: .
       args:
        - DEV=true
     ports:
-     - "8000:8000" # port 8000 from local machine to port 8000 to docker container
+     - "8000:8000"
     volumes:
-     - ./app:/app # same as ports, so the code in project is in sync with the container without having to rebuild it every single time
+     - ./app:/app
     command: >
      sh -c "python manage.py runserver 0.0.0.0:8000" 
