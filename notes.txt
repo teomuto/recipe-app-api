@@ -21,7 +21,8 @@ RUN python -m venv /py && \ # new virtual enviroment
     if [ $DEV = "true"]; \ # if dev enviroment, install dev pendencies
         then /py/bin/pip install -r requirements.dev.txt ; \
     fi && \ 
-    rm -rf /tmp && \ # remove directory to avoid extra dependencies and make image as light-weight as possible
+    rm -rf /tmp && \ # remove directory to avoid extra dependencies and make image as light-weight as possible, had to remove this line
+                     # for some reason it was preventing the container from installing the packages
     adduser \ # adds user into image (avoid using root user)
         --disabled-password \ 
         --no-create-home \
