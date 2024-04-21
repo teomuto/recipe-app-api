@@ -18,6 +18,9 @@ COPY ./requirements.txt /tmp/requirements.txt copies the first filename from the
 RUN python -m venv /py && \ # new virtual enviroment
     /py/bin/pip install --upgrade pip && \ # upgrades pip
     /py/bin/pip install -r /tmp/requirements.txt && \ # install requirements into venv
+    if [ $DEV = "true"]; \ # if dev enviroment, install dev pendencies
+        then /py/bin/pip install -r requirements.dev.txt ; \
+    fi && \ 
     rm -rf /tmp && \ # remove directory to avoid extra dependencies and make image as light-weight as possible
     adduser \ # adds user into image (avoid using root user)
         --disabled-password \ 

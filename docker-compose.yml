@@ -5,6 +5,8 @@ services:
   app:
     build:
       context: . # current directory
+      args:
+       - DEV=true
     ports:
      - "8000:8000" # port 8000 from local machine to port 8000 to docker container
     volumes:
